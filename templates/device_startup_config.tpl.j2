@@ -78,6 +78,9 @@ ip prefix-list BOGON-Prefixes seq 10 permit 172.16.0.0/12 le 24
 ip prefix-list BOGON-Prefixes seq 20 permit 192.168.0.0/16 le 24
 ip prefix-list BOGON-Prefixes seq 10 permit 172.16.0.0/12 le 24
 ip prefix-list BOGON-Prefixes seq 20 permit 192.168.0.0/16 le 24
+ip prefix-list BOGON-Prefixes seq 21 permit 192.167.0.0/16 le 24
+ip prefix-list BOGON-Prefixes seq 22 permit 192.168.0.0/16 le 24
+
 !
 ip routing
 !
@@ -85,6 +88,7 @@ ip route 0.0.0.0/0 172.20.20.1
 !
 {% if data.InfraDevice.edges[0].node.asn %}
 router bgp {{ data.InfraDevice.edges[0].node.asn.node.asn.value }}
+   ! these are peerings not sessions.
    router-id {{ loopback_ip }}
 {%   for peer_group in data.InfraBGPPeerGroup.edges %}
    neighbor {{ peer_group.node.name.value }} peer group
